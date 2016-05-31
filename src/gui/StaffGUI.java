@@ -1,7 +1,5 @@
 package gui;
 
-import gui.visitor.VisitorMainPanel;
-import gui.visitor.VisitorSchemaPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
