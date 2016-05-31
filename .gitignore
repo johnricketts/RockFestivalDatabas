@@ -48,3 +48,5 @@ fabric.properties
 
 .gitignore
 /.idea/
+res/
+/res/login
