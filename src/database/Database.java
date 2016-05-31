@@ -224,6 +224,54 @@ public class Database {
         return responsibilityList;
     }
 
+    public String getBandContact(String band){
+        String bandContact = "Kontaktperson för " + band + ": ";
+        String query = "select personal.namn from personal inner join band on personal.personnr = band.kontaktpersonnr where band.namn = '" + band + "';";
+        try{
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+            while(rs.next()){
+                bandContact += rs.getString("personal.namn") + ".";
+            }
+            st.close();
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bandContact;
+    }
+
+    public String getStaffBandResponsibility(String id){
+        String bandList = "";
+        String query = "select namn from personal where personnr = '" + id +"'";
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next()){
+                bandList += rs.getString("namn") + " är kontaktperson för: ";
+            }
+            st.close();
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        query = "";
+        query = "select namn from band where kontaktpersonnr ='" + id + "';";
+        try{
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next()){
+                bandList += rs.getString("namn") + ", ";
+            }
+            st.close();
+            rs.close();
+          bandList = bandList.substring(0, bandList.length()-2);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bandList;
+    }
+
     /**
      * Add a new performance of a band
      * @param bandnamn - The performing band
@@ -249,8 +297,9 @@ public class Database {
         System.out.println(b.getBandBio("Cannibal Corpse"));
         System.out.println(b.getScheduleForStage("Scenscenen"));
         System.out.println(b.getStaffResponsibility("Scenscenen"));
-        b.addPerformance("Cannibal Corpse", "Scenscenen", "2022-01-01 07:00:00");
         System.out.println(b.getScheduleForBand("Cannibal Corpse"));
+        System.out.println(b.getBandContact("Cannibal Corpse"));
+        System.out.print(b.getStaffBandResponsibility("8911171234"));
     }
 
 }
