@@ -10,12 +10,12 @@ import java.awt.event.ActionListener;
 /**
  * Created by John on 2016-05-31.
  */
-public class VisitorGUI extends JFrame implements ActionListener {
+public class VisitorGui extends JFrame implements ActionListener {
     JPanel cards = new JPanel();
     VisitorMainPanel mainPnl = new VisitorMainPanel();
     VisitorSchemaPanel schemaPnl = new VisitorSchemaPanel();
 
-    public VisitorGUI() {
+    public VisitorGui() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Rockfestival");
         setContent();
@@ -56,6 +56,6 @@ public class VisitorGUI extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
 
-        SwingUtilities.invokeLater(() -> new VisitorGUI());
+        SwingUtilities.invokeLater(() -> new VisitorGui());
     }
 }
