@@ -1,5 +1,6 @@
 package gui;
 
+import database.Database;
 import gui.visitor.*;
 
 import javax.swing.*;
@@ -13,12 +14,13 @@ import java.awt.event.ItemListener;
  * Created by John on 2016-05-31.
  */
 public class VisitorGui extends JFrame {
+    private Database database = new Database();
     JPanel cards = new JPanel();
     MainPanel mainPanel = new MainPanel();
     MainSchedulePanel mainSchedulePanel = new MainSchedulePanel();
     MainBandInfoPanel mainBandInfoPanel = new MainBandInfoPanel();
     SceneSchedulePanel sceneSchedulePanel = new SceneSchedulePanel();
-    BandSchedulePanel bandSchedulePanel = new BandSchedulePanel();
+    BandSchedulePanel bandSchedulePanel = new BandSchedulePanel(database);
     ImageIcon map = new ImageIcon("C:\\Users\\Albin\\IdeaProjects\\RockFestivalDatabas\\src\\gui\\visitor\\karta.jpg");
 
     public VisitorGui() {
@@ -29,6 +31,7 @@ public class VisitorGui extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+        database.connect();
     }
 
     public void setContent() {
