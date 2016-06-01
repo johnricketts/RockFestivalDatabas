@@ -17,10 +17,11 @@ public class SceneSchedulePanel extends JPanel implements ItemListener {
     private Database database;
 
     public SceneSchedulePanel(Database database) {
-        setLayout(new GridLayout(0,3));
+        setLayout(new GridLayout(3,0));
         this.database = database;
         fillComboBoxScenes();
         taInfo.setEditable(false);
+        scenesCB.addItemListener(this);
         add(scenesCB);
         add(taInfo);
         add(btnBack);
