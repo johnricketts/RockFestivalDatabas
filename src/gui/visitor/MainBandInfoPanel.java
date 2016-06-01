@@ -17,10 +17,11 @@ public class MainBandInfoPanel extends JPanel implements ItemListener {
     private Database database;
 
     public MainBandInfoPanel(Database database) {
-        setLayout(new GridLayout(0,3));
+        setLayout(new GridLayout(3,0));
         this.database = database;
         fillComboBoxBandInfo();
         taInfo.setEditable(false);
+        bandInfoCB.addItemListener(this);
         add(bandInfoCB);
         add(taInfo);
         add(btnBack);

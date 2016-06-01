@@ -18,10 +18,11 @@ public class BandSchedulePanel extends JPanel implements ItemListener {
     private Database database;
 
     public BandSchedulePanel(Database database) {
-        setLayout(new GridLayout(0,3));
+        setLayout(new GridLayout(3,0));
         this.database = database;
         fillComboBoxBands();
         taInfo.setEditable(false);
+        bandsCB.addItemListener(this);
         add(bandsCB);
         add(taInfo);
         add(btnBack);
