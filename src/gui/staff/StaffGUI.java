@@ -20,6 +20,7 @@ public class StaffGUI extends JFrame {
     private JButton btnStageSchedule;
     private JButton btnBandSchedule;
     private JButton btnStaffResponsibility;
+    private JButton btnAddNewBand;
     private Database  db;
 
     public StaffGUI() {
@@ -39,6 +40,7 @@ public class StaffGUI extends JFrame {
         btnBandAnsvar.addActionListener(e-> getBandContact());
         btnStaffResponsibility.addActionListener(e-> getStaffBandResponsibility());
         btnAddPerformance.addActionListener(e-> addPerformance());
+        btnAddNewBand.addActionListener(e -> addNewBand());
     }
 
 
@@ -87,6 +89,30 @@ public class StaffGUI extends JFrame {
         String band = JOptionPane.showInputDialog("Vilket band?");
         db.addPerformance(band, stage,time);
         JOptionPane.showMessageDialog(null, "Ny spelning tillagd");
+    }
+
+    public void addNewBand(){
+        String band = JOptionPane.showInputDialog("Namn på band:");
+        String country = JOptionPane.showInputDialog("Vilket land kommer bandet ifrån?");
+        String genre = JOptionPane.showInputDialog("Vilken genre tillhör bandet?");
+        String bio = JOptionPane.showInputDialog("Skriv en kort biografi om bandet:");
+        String contactID = JOptionPane.showInputDialog("Personnummer på kontaktpersonen: ");
+        db.addNewBand(band,country,genre,bio,contactID);
+
+        int choice = JOptionPane.showConfirmDialog(null, "Vill du lägga till bandmedlemmar?");
+        if(choice == JOptionPane.YES_OPTION){
+            boolean running = true;
+            while(running){
+                String bandmember = JOptionPane.showInputDialog("Namn på bandmedlem: ");
+                String role = JOptionPane.showInputDialog("Roll i bandet: ");
+                String memberbio = JOptionPane.showInputDialog("Kort biografi om medlem:");
+                db.addBandMember(bandmember,role,memberbio,band);
+                int newMemberChoice = JOptionPane.showConfirmDialog(null, "Vill du lägga till en till bandmedlem?");
+                if(newMemberChoice == JOptionPane.NO_OPTION){
+                    running = false;
+                }
+            }
+        }
     }
 
     public static void main(String[] args) {

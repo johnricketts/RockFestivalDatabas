@@ -15,7 +15,7 @@ public class Database {
     private static final String host =  "jdbc:mysql://195.178.232.16:3306/m11p1108";
     private String uname;
     private String password;
-    private File file = new File("C:\\Users\\johnn\\IdeaProjects\\RockFestivalDatabas\\res\\login");
+    private File file = new File("C:\\Users\\Johnnnri\\IdeaProjects\\RockFestivalDatabas\\res\\login");
 
     /**
      * Fetches log in information from a file
@@ -345,5 +345,57 @@ public class Database {
         }
         staffMembers = staffMembers.substring(0, staffMembers.length()-2);
         return staffMembers;
+    }
+
+    /**
+     * Adds a new band to the database
+     * @param name
+     * @param country
+     * @param genre
+     * @param biography
+     * @param contactid
+     */
+    public void addNewBand(String name, String country, String genre, String biography, String contactid){
+        String query = "insert into band values (" + "'" + name + "'," + "'" + country + "'," + "'" + genre + "'," + "'" + biography + "'," + "'" + contactid + "');";
+        try {
+            st = con.createStatement();
+            st.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Adds a member to a band
+     * @param name
+     * @param role
+     * @param biography
+     * @param band
+     */
+    public void addBandMember(String name, String role, String biography, String band){
+        int memberID = Integer.MIN_VALUE;
+        /*
+        Get the id to increment id for next member
+         */
+        String query = "select max(id) id from bandmedlem;";
+        try{
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next()){
+              memberID = rs.getInt("id");
+            }
+            st.close();
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        memberID++;
+        query = "insert into bandmedlem values (" + memberID + "," + "'" + name + "'," + "'" + role + "'," + "'" + biography + "'," + "'" + band + "');";
+        try{
+            st = con.createStatement();
+            st.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
