@@ -35,7 +35,7 @@ public class BandSchedulePanel extends JPanel implements ItemListener {
     }
 
     public void itemStateChanged(ItemEvent e) {
-        taInfo.append(database.getScheduleForBand((String)e.getItem()));
+        taInfo.setText(database.getScheduleForBand((String)e.getItem()));
     }
 
     public JComboBox getComboBox() {

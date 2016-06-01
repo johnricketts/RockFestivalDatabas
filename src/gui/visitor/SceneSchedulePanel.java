@@ -34,7 +34,7 @@ public class SceneSchedulePanel extends JPanel implements ItemListener {
     }
 
     public void itemStateChanged(ItemEvent e) {
-        taInfo.append(database.getBandBio((String)e.getItem()));
+        taInfo.setText(database.getScheduleForStage((String)e.getItem()));
     }
 
     public JComboBox getComboBox() {

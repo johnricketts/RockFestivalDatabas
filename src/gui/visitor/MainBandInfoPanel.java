@@ -35,7 +35,7 @@ public class MainBandInfoPanel extends JPanel implements ItemListener {
 
 
     public void itemStateChanged(ItemEvent e) {
-        taInfo.append(database.getScheduleForStage((String)e.getItem()));
+        taInfo.setText(database.getBandBio((String)e.getItem()));
     }
 
     public JButton getBtnBack() {

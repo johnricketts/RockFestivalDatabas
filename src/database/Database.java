@@ -148,6 +148,7 @@ public class Database {
         }
 
         query = "select namn, biografi from bandmedlem where band = '" + band + "';";
+        bandBio+= "Medlemmar: \n";
         try{
             st = con.createStatement();
             rs = st.executeQuery(query);
