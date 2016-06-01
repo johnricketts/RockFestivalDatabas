@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class Database {
 
     private Connection con;
-    private PreparedStatement ps;
     private Statement st;
     private ResultSet rs;
     private static final String host =  "jdbc:mysql://195.178.232.16:3306/m11p1108";
@@ -147,7 +146,7 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        query = "";
+
         query = "select namn, biografi from bandmedlem where band = '" + band + "';";
         try{
             st = con.createStatement();
@@ -164,6 +163,11 @@ public class Database {
         return bandBio;
     }
 
+    /**
+     * Gets a list of a schedule for a given stage
+     * @param stage the stage to find the schedule for
+     * @return schedule for the stage
+     */
     public String getScheduleForStage(String stage){
         String schedule = "Spelschema för scen: " + stage + "\n\n";
         String query = "select tid, bandnamn from spelning where scennamn = '" + stage + "';";
@@ -182,6 +186,11 @@ public class Database {
         return schedule;
     }
 
+    /**
+     * Gets the entire schedule for a given band
+     * @param band the name of the band
+     * @return schedule for the band
+     */
     public String getScheduleForBand(String band){
         String schedule = "Spelschema för: " + band + "\n\n";
         String query = "select * from spelning where bandnamn ='" + band + "' order by tid asc;";
@@ -224,6 +233,11 @@ public class Database {
         return responsibilityList;
     }
 
+    /**
+     * Finds the contact for a given band
+     * @param band the band to find the contact person for
+     * @return bandContact
+     */
     public String getBandContact(String band){
         String bandContact = "Kontaktperson för " + band + ": ";
         String query = "select personal.namn from personal inner join band on personal.personnr = band.kontaktpersonnr where band.namn = '" + band + "';";
@@ -241,6 +255,11 @@ public class Database {
         return bandContact;
     }
 
+    /**
+     * Gets a list of bands a certain staff member is responsible for
+     * @param id the personal number of the staff member
+     * @return bandList a list of bands a staff member is responsible for
+     */
     public String getStaffBandResponsibility(String id){
         String bandList = "";
         String query = "select namn from personal where personnr = '" + id +"'";
@@ -255,7 +274,6 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        query = "";
         query = "select namn from band where kontaktpersonnr ='" + id + "';";
         try{
             st = con.createStatement();
@@ -278,7 +296,7 @@ public class Database {
      * @param scennamn - The stage they are performing on
      * @param tid - Walk on time for the performance
      */
-    public void addPerformance(String bandnamn, String scennamn, String tid){
+    public void addPerformance(String bandnamn, String scennamn, String tid) {
         String query = "insert into spelning values('" + tid + "'" + ", '" + scennamn + "'," + "'" + bandnamn + "');";
         try {
             st = con.createStatement();
@@ -289,17 +307,38 @@ public class Database {
         }
     }
 
-
-    public static void main(String [] args){
-        Database b = new Database();
-        b.connect();
-        System.out.println(b.getAllStages());
-        System.out.println(b.getBandBio("Cannibal Corpse"));
-        System.out.println(b.getScheduleForStage("Scenscenen"));
-        System.out.println(b.getStaffResponsibility("Scenscenen"));
-        System.out.println(b.getScheduleForBand("Cannibal Corpse"));
-        System.out.println(b.getBandContact("Cannibal Corpse"));
-        System.out.print(b.getStaffBandResponsibility("8911171234"));
+    /**
+     * Adds a new staff member to the database
+     * @param id the personal number of the staff member
+     * @param name
+     * @param telephoneNbr
+     */
+    public void addStaffMember(String id, String name, String telephoneNbr){
+        String query = "insert into personal values ('" + id + "'" + "," + "'" + name + "'" + "," + "'" + telephoneNbr + "');";
+        try{
+            st = con.createStatement();
+            st.executeUpdate(query);
+            st.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
+    public String getAllStaffMembers(){
+        String query = "select * from personal;";
+        String staffMembers = "Current staff: ";
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next()){
+                staffMembers += rs.getString("namn") + ", ";
+            }
+            st.close();
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        staffMembers = staffMembers.substring(0, staffMembers.length()-2);
+        return staffMembers;
+    }
 }
