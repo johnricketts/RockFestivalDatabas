@@ -1,5 +1,7 @@
 package gui.staff;
 
+import database.Database;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,8 +19,11 @@ public class StaffGUI extends JFrame {
     private JButton btnAddPerformance;
     private JButton btnStageSchedule;
     private JButton btnBandSchedule;
+    private Database  db;
 
     public StaffGUI() {
+        db = new Database();
+        db.connect();
         setContentPane(main);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Rockfestival - Staff");
@@ -26,6 +31,8 @@ public class StaffGUI extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+        btnAddStaffMember.addActionListener(e-> addStaff());
+        btnScenAnsvar.addActionListener(e-> getStageResponsibility());
     }
 
 
@@ -34,10 +41,17 @@ public class StaffGUI extends JFrame {
         id =  JOptionPane.showInputDialog("Personnummer: ");
         name = JOptionPane.showInputDialog("Namn: ");
         phoneNbr = JOptionPane.showInputDialog("Telefonnummer: ");
+        db.addStaffMember(id,name,phoneNbr);
+        JOptionPane.showMessageDialog(null, "Ny anställd tillagd.");
+    }
 
+    public void getStageResponsibility(){
+        String stage = JOptionPane.showInputDialog("Vilken scen vill du ha ansvarsschema för?");
+        String result = db.getStaffResponsibility(stage);
+        JOptionPane.showMessageDialog(null,result);
     }
 
     public static void main(String[] args) {
-
+        new StaffGUI();
     }
 }
