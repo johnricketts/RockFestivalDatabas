@@ -13,8 +13,8 @@ public class Database {
     private Statement st;
     private ResultSet rs;
     private static final String host =  "jdbc:mysql://195.178.232.16:3306/m11p1108";
-    private String uname = "M11P1108";
-    private String password = "root";
+    private String uname;
+    private String password;
     private File file = new File("C:\\Users\\johnn\\IdeaProjects\\RockFestivalDatabas\\res\\login");
 
     /**
@@ -23,8 +23,8 @@ public class Database {
     public void fetchLogin(){
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
-            //uname = br.readLine();
-            //password = br.readLine();
+            uname = br.readLine();
+            password = br.readLine();
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -35,7 +35,7 @@ public class Database {
      * Sets up the connection to the database
      */
     public void connect (){
-        //fetchLogin();
+        fetchLogin();
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {

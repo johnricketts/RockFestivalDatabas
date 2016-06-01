@@ -14,16 +14,22 @@ import java.awt.event.ItemListener;
  * Created by John on 2016-05-31.
  */
 public class VisitorGui extends JFrame {
-    private Database database = new Database();
+    private Database database;
     JPanel cards = new JPanel();
     MainPanel mainPanel = new MainPanel();
-    MainSchedulePanel mainSchedulePanel = new MainSchedulePanel();
-    MainBandInfoPanel mainBandInfoPanel = new MainBandInfoPanel();
-    SceneSchedulePanel sceneSchedulePanel = new SceneSchedulePanel();
-    BandSchedulePanel bandSchedulePanel = new BandSchedulePanel(database);
+    MainSchedulePanel mainSchedulePanel;
+    MainBandInfoPanel mainBandInfoPanel;
+    SceneSchedulePanel sceneSchedulePanel;
+    BandSchedulePanel bandSchedulePanel;
     ImageIcon map = new ImageIcon("C:\\Users\\Albin\\IdeaProjects\\RockFestivalDatabas\\src\\gui\\visitor\\karta.jpg");
 
     public VisitorGui() {
+        database = new Database();
+        database.connect();
+        mainSchedulePanel = new MainSchedulePanel();
+        mainBandInfoPanel = new MainBandInfoPanel();
+        sceneSchedulePanel = new SceneSchedulePanel(database);
+        bandSchedulePanel = new BandSchedulePanel(database);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Rockfestival");
         setContent();
@@ -31,7 +37,6 @@ public class VisitorGui extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-        database.connect();
     }
 
     public void setContent() {

@@ -15,15 +15,13 @@ public class BandSchedulePanel extends JPanel {
 
     public BandSchedulePanel(Database database) {
         this.database = database;
-        getBands();
+        fillComboBoxBands();
         add(bandsCB);
         add(btnBack);
     }
 
-    private void getBands() {
-        ArrayList<String> bands = new ArrayList<>();
-        bands = database.getAllBands();
-        for(String b : bands) {
+    public void fillComboBoxBands() {
+        for(String b : database.getAllBands()) {
             bandsCB.addItem(b);
         }
     }

@@ -1,5 +1,7 @@
 package gui.visitor;
 
+import database.Database;
+
 import javax.swing.*;
 
 /**
@@ -8,17 +10,19 @@ import javax.swing.*;
 public class SceneSchedulePanel extends JPanel {
     private JComboBox<String> scenesCB = new JComboBox<>();
     private JButton btnBack = new JButton("Back");
-    private String scenScenen, mallorcascenen, dieseltältet;
+    private Database database;
 
-    public SceneSchedulePanel() {
-        scenScenen = "Scenscenen";
-        mallorcascenen = "Mallorcascenen";
-        dieseltältet = "Dieseltältet";
-        scenesCB.addItem(scenScenen);
-        scenesCB.addItem(mallorcascenen);
-        scenesCB.addItem(dieseltältet);
+    public SceneSchedulePanel(Database database) {
+        this.database = database;
+        fillComboBoxScenes();
         add(scenesCB);
         add(btnBack);
+    }
+
+    public void fillComboBoxScenes(){
+        for(String s : database.getAllStages()){
+            scenesCB.addItem(s);
+        }
     }
 
     public JComboBox getComboBox() {
