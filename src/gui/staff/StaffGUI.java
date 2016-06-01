@@ -19,6 +19,7 @@ public class StaffGUI extends JFrame {
     private JButton btnAddPerformance;
     private JButton btnStageSchedule;
     private JButton btnBandSchedule;
+    private JButton btnStaffResponsibility;
     private Database  db;
 
     public StaffGUI() {
@@ -33,6 +34,11 @@ public class StaffGUI extends JFrame {
         setVisible(true);
         btnAddStaffMember.addActionListener(e-> addStaff());
         btnScenAnsvar.addActionListener(e-> getStageResponsibility());
+        btnStageSchedule.addActionListener(e-> getStageSchedule());
+        btnBandSchedule.addActionListener(e-> getBandSchedule());
+        btnBandAnsvar.addActionListener(e-> getBandContact());
+        btnStaffResponsibility.addActionListener(e-> getStaffBandResponsibility());
+        btnAddPerformance.addActionListener(e-> addPerformance());
     }
 
 
@@ -49,6 +55,38 @@ public class StaffGUI extends JFrame {
         String stage = JOptionPane.showInputDialog("Vilken scen vill du ha ansvarsschema för?");
         String result = db.getStaffResponsibility(stage);
         JOptionPane.showMessageDialog(null,result);
+    }
+
+    public void getStageSchedule(){
+        String stage = JOptionPane.showInputDialog("Vilken scen vill du ha spelschema för?");
+        String result = db.getScheduleForStage(stage);
+        JOptionPane.showMessageDialog(null, result);
+    }
+
+    public void getBandSchedule(){
+        String band = JOptionPane.showInputDialog("Vilket band vill du ha spelschema för?");
+        String result = db.getScheduleForBand(band);
+        JOptionPane.showMessageDialog(null, result);
+    }
+
+    public void getBandContact(){
+        String band = JOptionPane.showInputDialog("Vilket band vill du hitta kontaktperson för?");
+        String result = db.getBandContact(band);
+        JOptionPane.showMessageDialog(null,result);
+    }
+
+    public void getStaffBandResponsibility(){
+        String staff = JOptionPane.showInputDialog("Personnummer för anställd: ");
+        String result = db.getStaffBandResponsibility(staff);
+        JOptionPane.showMessageDialog(null,result);
+    }
+
+    public void addPerformance(){
+        String time = JOptionPane.showInputDialog("Vilken tid?");
+        String stage = JOptionPane.showInputDialog("Vilken scen?");
+        String band = JOptionPane.showInputDialog("Vilket band?");
+        db.addPerformance(band, stage,time);
+        JOptionPane.showMessageDialog(null, "Ny spelning tillagd");
     }
 
     public static void main(String[] args) {

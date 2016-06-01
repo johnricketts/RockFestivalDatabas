@@ -21,7 +21,7 @@ public class VisitorGui extends JFrame {
     MainBandInfoPanel mainBandInfoPanel;
     SceneSchedulePanel sceneSchedulePanel;
     BandSchedulePanel bandSchedulePanel;
-    ImageIcon map = new ImageIcon("C:\\Users\\Albin\\IdeaProjects\\RockFestivalDatabas\\src\\gui\\visitor\\karta.jpg");
+    ImageIcon map = new ImageIcon("C:\\Users\\johnn\\IdeaProjects\\RockFestivalDatabas\\src\\gui\\visitor\\karta.jpg");
 
     public VisitorGui() {
         database = new Database();
