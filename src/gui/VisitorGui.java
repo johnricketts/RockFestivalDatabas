@@ -27,7 +27,7 @@ public class VisitorGui extends JFrame {
         database = new Database();
         database.connect();
         mainSchedulePanel = new MainSchedulePanel();
-        mainBandInfoPanel = new MainBandInfoPanel();
+        mainBandInfoPanel = new MainBandInfoPanel(database);
         sceneSchedulePanel = new SceneSchedulePanel(database);
         bandSchedulePanel = new BandSchedulePanel(database);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
