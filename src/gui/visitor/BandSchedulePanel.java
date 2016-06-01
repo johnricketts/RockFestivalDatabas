@@ -1,14 +1,18 @@
 package gui.visitor;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * Created by Albin on 2016-05-31.
  */
 public class BandSchedulePanel extends JPanel {
+    private JButton btnBack = new JButton("Back");
 
     public BandSchedulePanel() {
-        setLayout(new GridLayout(0, 1));
+        add(btnBack);
+    }
+
+    public JButton getBtnBack() {
+        return btnBack;
     }
 }
