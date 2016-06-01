@@ -324,8 +324,12 @@ public class Database {
         }
     }
 
+    /**
+     * Gets a list of all the current staff members names
+     * @return
+     */
     public String getAllStaffMembers(){
-        String query = "select * from personal;";
+        String query = "select namn from personal;";
         String staffMembers = "Current staff: ";
         try {
             st = con.createStatement();
