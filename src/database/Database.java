@@ -221,7 +221,7 @@ public class Database {
             st = con.createStatement();
             rs = st.executeQuery(query);
             while (rs.next()){
-                responsibilityList += "Tid: " + rs.getTimestamp("tid");
+                responsibilityList += "Datum: " + rs.getTimestamp("tid");
                 responsibilityList += " Personal: " + rs.getString("personal.namn") +".";
                 responsibilityList += " Personnummer: " + rs.getString("personal.personnr") + "\n";
             }
