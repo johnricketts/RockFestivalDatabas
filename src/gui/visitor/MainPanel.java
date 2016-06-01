@@ -8,7 +8,7 @@ import static java.awt.Label.CENTER;
 /**
  * Created by Albin on 2016-05-31.
  */
-public class VisitorMainPanel extends JPanel {
+public class MainPanel extends JPanel {
     private JPanel pnlLbl = new JPanel();
     private JPanel pnlButtons = new JPanel();
     private JLabel lblMain = new JLabel("Festivalinformation");
@@ -16,7 +16,7 @@ public class VisitorMainPanel extends JPanel {
     private JButton btnInfo = new JButton("Bandinformation");
     private JButton btnMap = new JButton("Karta");
 
-    public VisitorMainPanel() {
+    public MainPanel() {
         setLayout(new GridLayout(0, 1));
         pnlLbl.setLayout(new GridLayout(0, 1));
         lblMain.setHorizontalAlignment(SwingConstants.CENTER);

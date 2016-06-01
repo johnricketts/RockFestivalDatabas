@@ -1,19 +1,25 @@
 package gui;
 
-import gui.visitor.VisitorMainPanel;
-import gui.visitor.VisitorSchemaPanel;
+import gui.visitor.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 /**
  * Created by John on 2016-05-31.
  */
-public class VisitorGui extends JFrame implements ActionListener {
+public class VisitorGui extends JFrame implements ItemListener {
     JPanel cards = new JPanel();
-    VisitorMainPanel mainPnl = new VisitorMainPanel();
-    VisitorSchemaPanel schemaPnl = new VisitorSchemaPanel();
+    MainPanel mainPanel = new MainPanel();
+    MainSchedulePanel mainSchedulePanel = new MainSchedulePanel();
+    MainBandInfoPanel mainBandInfoPanel = new MainBandInfoPanel();
+    SceneSchedulePanel sceneSchedulePanel = new SceneSchedulePanel();
+    BandSchedulePanel bandSchedulePanel = new BandSchedulePanel();
+    ImageIcon map = new ImageIcon("C:\\Users\\Albin\\IdeaProjects\\RockFestivalDatabas\\src\\gui\\visitor\\karta.jpg");
 
     public VisitorGui() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,34 +34,46 @@ public class VisitorGui extends JFrame implements ActionListener {
 
     public void setContent() {
         cards = new JPanel(new CardLayout());
-        cards.add(mainPnl, "Card 1");
-        cards.add(schemaPnl, "Card 2");
+        //Main panel
+        cards.add(mainPanel, "Card 1");
+
+        //Schedule panels
+        cards.add(mainSchedulePanel, "Card 2");
+        cards.add(bandSchedulePanel, "Card 4");
+        cards.add(sceneSchedulePanel, "Card 5");
+
+        //Band information panels
+        cards.add(mainBandInfoPanel, "Card 3");
+
         add(cards);
         addListeners();
     }
 
     public void addListeners() {
-        //VisitorMainPanel
-        mainPnl.getBtnSchema().addActionListener(this);
+        //MainPanel
+        mainPanel.getBtnSchema().addActionListener(e -> changeCard("card 2"));
         mainPnl.getBtnInfo().addActionListener(this);
-        mainPnl.getBtnMap().addActionListener(this);
+        mainPanel.getBtnMap().addActionListener(e -> showMap());
 
-        //VisitorSchemaPanel
+        //MainSchedulePanel
+        schemaPnl.getBtnScen().addActionListener(this);
+        schemaPnl.getBtnBand().addActionListener(this);
         schemaPnl.getBtnBack().addActionListener(this);
+
+        //VisitorBandPanel
+        bandPnl.getBtnBack().addActionListener(this);
     }
 
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == mainPnl.getBtnSchema()) {
-            CardLayout cardLayout = (CardLayout) cards.getLayout();
-            cardLayout.show(cards, "Card 2");
-        } else if(e.getSource() == schemaPnl.getBtnBack()) {
-            CardLayout cardLayout = (CardLayout) cards.getLayout();
-            cardLayout.show(cards, "Card 1");
-        }
+    private void changeCard(String cardname) {
+        CardLayout cl = (CardLayout) (cards.getLayout());
+        cl.show(cards, cardname);
+    }
+
+    public void showMap() {
+        JOptionPane.showMessageDialog(null, "", "Karta över området", JOptionPane.INFORMATION_MESSAGE, map);
     }
 
     public static void main(String[] args) {
-
         SwingUtilities.invokeLater(() -> new VisitorGui());
     }
 }
