@@ -15,7 +15,7 @@ public class Database {
     private static final String host =  "jdbc:mysql://195.178.232.16:3306/m11p1108";
     private String uname;
     private String password;
-    private File file = new File("C:\\Users\\Johnnnri\\IdeaProjects\\RockFestivalDatabas\\res\\login");
+    private File file = new File("res/login");
 
     /**
      * Fetches log in information from a file
