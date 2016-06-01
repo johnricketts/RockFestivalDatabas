@@ -1,5 +1,6 @@
 package gui;
 
+import database.Database;
 import gui.visitor.*;
 
 import javax.swing.*;
@@ -12,13 +13,14 @@ import java.awt.event.ItemListener;
 /**
  * Created by John on 2016-05-31.
  */
-public class VisitorGui extends JFrame implements ItemListener {
+public class VisitorGui extends JFrame {
+    private Database database = new Database();
     JPanel cards = new JPanel();
     MainPanel mainPanel = new MainPanel();
     MainSchedulePanel mainSchedulePanel = new MainSchedulePanel();
     MainBandInfoPanel mainBandInfoPanel = new MainBandInfoPanel();
     SceneSchedulePanel sceneSchedulePanel = new SceneSchedulePanel();
-    BandSchedulePanel bandSchedulePanel = new BandSchedulePanel();
+    BandSchedulePanel bandSchedulePanel = new BandSchedulePanel(database);
     ImageIcon map = new ImageIcon("C:\\Users\\Albin\\IdeaProjects\\RockFestivalDatabas\\src\\gui\\visitor\\karta.jpg");
 
     public VisitorGui() {
@@ -27,23 +29,23 @@ public class VisitorGui extends JFrame implements ItemListener {
         setContent();
         setPreferredSize(new Dimension(640, 480));
         pack();
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        setLocationRelativeTo(null);
         setVisible(true);
+        database.connect();
     }
 
     public void setContent() {
         cards = new JPanel(new CardLayout());
         //Main panel
-        cards.add(mainPanel, "Card 1");
+        cards.add(mainPanel, "mainPanel");
 
         //Schedule panels
-        cards.add(mainSchedulePanel, "Card 2");
-        cards.add(bandSchedulePanel, "Card 4");
-        cards.add(sceneSchedulePanel, "Card 5");
+        cards.add(mainSchedulePanel, "mainSchedulePanel");
+        cards.add(bandSchedulePanel, "bandSchedulePanel");
+        cards.add(sceneSchedulePanel, "sceneSchedulePanel");
 
         //Band information panels
-        cards.add(mainBandInfoPanel, "Card 3");
+        cards.add(mainBandInfoPanel, "mainBandInfoPanel");
 
         add(cards);
         addListeners();
@@ -51,17 +53,23 @@ public class VisitorGui extends JFrame implements ItemListener {
 
     public void addListeners() {
         //MainPanel
-        mainPanel.getBtnSchema().addActionListener(e -> changeCard("card 2"));
-        mainPnl.getBtnInfo().addActionListener(this);
+        mainPanel.getBtnSchema().addActionListener(e -> changeCard("mainSchedulePanel"));
+        mainPanel.getBtnInfo().addActionListener(e -> changeCard("mainBandInfoPanel"));
         mainPanel.getBtnMap().addActionListener(e -> showMap());
 
         //MainSchedulePanel
-        schemaPnl.getBtnScen().addActionListener(this);
-        schemaPnl.getBtnBand().addActionListener(this);
-        schemaPnl.getBtnBack().addActionListener(this);
+        mainSchedulePanel.getBtnScen().addActionListener(e -> changeCard("sceneSchedulePanel"));
+        mainSchedulePanel.getBtnBand().addActionListener(e -> changeCard("bandSchedulePanel"));
+        mainSchedulePanel.getBtnBack().addActionListener(e -> changeCard("mainPanel"));
 
-        //VisitorBandPanel
-        bandPnl.getBtnBack().addActionListener(this);
+        //BandSchedulePanel
+        bandSchedulePanel.getBtnBack().addActionListener(e -> changeCard("mainSchedulePanel"));
+
+        //SceneSchedulePanel
+        sceneSchedulePanel.getBtnBack().addActionListener(e -> changeCard("mainSchedulePanel"));
+
+        //MainBandInfoPanel
+        mainBandInfoPanel.getBtnBack().addActionListener(e -> changeCard("mainPanel"));
     }
 
     private void changeCard(String cardname) {
