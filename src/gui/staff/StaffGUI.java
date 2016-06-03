@@ -112,9 +112,9 @@ public class StaffGUI extends JFrame {
                     running = false;
                 }
             }
+            JOptionPane.showMessageDialog(null, "Band tillagt");
         }
     }
-
     public static void main(String[] args) {
         new StaffGUI();
     }
